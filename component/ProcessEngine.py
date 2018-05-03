@@ -19,6 +19,12 @@ class ProcessEngine():
                 self.__saveAsTextFile(head,self.__rdd)
             elif head["nodeName"]=="coalesce":
                 self.__coalesce(head,self.__rdd)
+            elif head["nodeNanName"]=="glom":
+                self.__glom(self.__rdd)
+            elif head["nodeNanName"]=="groupBy":
+                self.__groupBy(head,self.__rdd)
+            elif head["nodeNanName"]=="groupByKey":
+                self.__groupByKey(head,self.__rdd)
     def __init(self,nodeMap):
         conf=SparkConf().setAppName(self.__appName)
         return SparkContext(conf=conf).textFile(nodeMap["path"])
@@ -35,3 +41,9 @@ class ProcessEngine():
         rdd.saveAsTextFile(nodeMap["operation"]+"/"+self.__appName+"-"+time.strftime('%Y%m%d%H%M%S',time.localtime(time.time())))
     def __coalesce(self,nodeMap,rdd):
         return rdd.coalesce(eval(nodeMap["operation"]))
+    def __glom(self,rdd):
+        return rdd.glom()
+    def __groupBy(self,nodeMap,rdd):
+        return rdd.groupBy(eval(nodeMap["operation"]))
+    def __groupByKey(self,nodeMap,rdd):
+        return rdd.groupByKey(eval(nodeMap["operation"]))
