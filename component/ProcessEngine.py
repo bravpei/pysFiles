@@ -45,6 +45,16 @@ class ProcessEngine():
                 self.__repartition(head,self.__rdd)
             elif head["nodeNanName"]=="repartitionAndSortWithinPartitions":
                 self.__repartitionAndSortWithinPartitions(head,self.__rdd)
+            elif head["nodeNanName"]=="sample":
+                self.__sample(head,self.__rdd)
+            elif head["nodeNanName"]=="sampleByKey":
+                self.__sampleByKey(head,self.__rdd)
+            elif head["nodeNanName"]=="sortBy":
+                self.__sortBy(head,self.__rdd)
+            elif head["nodeNanName"]=="sortByKey":
+                self.__sortByKey(head,self.__rdd)
+            elif head["nodeNanName"]=="values":
+                self.__values(head,self.__rdd)
     def __init(self,nodeMap):
         conf=SparkConf().setAppName(self.__appName)
         return SparkContext(conf=conf).textFile(nodeMap["path"])
@@ -87,3 +97,13 @@ class ProcessEngine():
         return rdd.repartition(eval(nodeMap["operation"]))
     def __repartitionAndSortWithinPartitions(self,nodeMap,rdd):
         return rdd.repartitionAndSortWithinPartitions(eval(nodeMap["operation"]))
+    def __sample(self,nodeMap,rdd):
+        return rdd.sample(eval(nodeMap["operation"]))
+    def __sampleByKey(self,nodeMap,rdd):
+        return rdd.sampleByKey(eval(nodeMap["operation"]))
+    def __sortBy(self,nodeMap,rdd):
+        return rdd.sortBy(eval(nodeMap["operation"]))
+    def __sortByKey(self,nodeMap,rdd):
+        return rdd.sortByKey(eval(nodeMap["operation"]))
+    def __values(self,nodeMap,rdd):
+        return rdd.values(eval(nodeMap["operation"]))
