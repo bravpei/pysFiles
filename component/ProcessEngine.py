@@ -28,7 +28,7 @@ class ProcessEngine():
             elif head["nodeName"]=="keyBy":
                 self.__rdd = self.__keyBy(head,self.__rdd)
             elif head["nodeName"]=="keys":
-                self.__rdd = self.__keys(head,self.__rdd)
+                self.__rdd = self.__keys(self.__rdd)
             elif head["nodeName"]=="mapPartitions":
                 self.__rdd = self.__mapPartitions(head,self.__rdd)
             elif head["nodeName"]=="mapPartitionsWithIndex":
@@ -79,8 +79,8 @@ class ProcessEngine():
         return rdd.groupByKey(eval(nodeMap["operation"]))
     def __keyBy(self,nodeMap,rdd):
         return rdd.keyBy(eval(nodeMap["operation"]))
-    def __keys(self,nodeMap,rdd):
-        return rdd.keys(eval(nodeMap["operation"]))
+    def __keys(self,rdd):
+        return rdd.keys()
     def __mapPartitions(self,nodeMap,rdd):
         return rdd.mapPartitions(eval(nodeMap["operation"]))
     def __mapPartitionsWithIndex(self,nodeMap,rdd):
