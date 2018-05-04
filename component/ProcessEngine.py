@@ -19,41 +19,41 @@ class ProcessEngine():
                 self.__saveAsTextFile(head,self.__rdd)
             elif head["nodeName"]=="coalesce":
                 self.__coalesce(head,self.__rdd)
-            elif head["nodeNanName"]=="glom":
+            elif head["nodeName"]=="glom":
                 self.__glom(self.__rdd)
-            elif head["nodeNanName"]=="groupBy":
+            elif head["nodeName"]=="groupBy":
                 self.__groupBy(head,self.__rdd)
-            elif head["nodeNanName"]=="groupByKey":
+            elif head["nodeName"]=="groupByKey":
                 self.__groupByKey(head,self.__rdd)
-            elif head["nodeNanName"]=="keyBy":
+            elif head["nodeName"]=="keyBy":
                 self.__keyBy(head,self.__rdd)
-            elif head["nodeNanName"]=="keys":
+            elif head["nodeName"]=="keys":
                 self.__keys(head,self.__rdd)
-            elif head["nodeNanName"]=="mapPartitions":
+            elif head["nodeName"]=="mapPartitions":
                 self.__mapPartitions(head,self.__rdd)
-            elif head["nodeNanName"]=="mapPartitionsWithIndex":
+            elif head["nodeName"]=="mapPartitionsWithIndex":
                 self.__mapPartitionsWithIndex(head,self.__rdd)
-            elif head["nodeNanName"]=="mapPartitionsWithSplit":
+            elif head["nodeName"]=="mapPartitionsWithSplit":
                 self.__mapPartitionsWithSplit(head,self.__rdd)
-            elif head["nodeNanName"]=="mapValues":
+            elif head["nodeName"]=="mapValues":
                 self.__mapValues(head,self.__rdd)
-            elif head["nodeNanName"]=="partitionBy":
+            elif head["nodeName"]=="partitionBy":
                 self.__partitionBy(head,self.__rdd)
-            elif head["nodeNanName"]=="persist":
+            elif head["nodeName"]=="persist":
                 self.__persist(head,self.__rdd)
-            elif head["nodeNanName"]=="repartition":
+            elif head["nodeName"]=="repartition":
                 self.__repartition(head,self.__rdd)
-            elif head["nodeNanName"]=="repartitionAndSortWithinPartitions":
+            elif head["nodeName"]=="repartitionAndSortWithinPartitions":
                 self.__repartitionAndSortWithinPartitions(head,self.__rdd)
-            elif head["nodeNanName"]=="sample":
+            elif head["nodeName"]=="sample":
                 self.__sample(head,self.__rdd)
-            elif head["nodeNanName"]=="sampleByKey":
+            elif head["nodeName"]=="sampleByKey":
                 self.__sampleByKey(head,self.__rdd)
-            elif head["nodeNanName"]=="sortBy":
+            elif head["nodeName"]=="sortBy":
                 self.__sortBy(head,self.__rdd)
-            elif head["nodeNanName"]=="sortByKey":
+            elif head["nodeName"]=="sortByKey":
                 self.__sortByKey(head,self.__rdd)
-            elif head["nodeNanName"]=="values":
+            elif head["nodeName"]=="values":
                 self.__values(self.__rdd)
     def __init(self,nodeMap):
         conf=SparkConf().setAppName(self.__appName)
