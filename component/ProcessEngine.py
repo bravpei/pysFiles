@@ -54,7 +54,7 @@ class ProcessEngine():
             elif head["nodeNanName"]=="sortByKey":
                 self.__sortByKey(head,self.__rdd)
             elif head["nodeNanName"]=="values":
-                self.__values(head,self.__rdd)
+                self.__values(self.__rdd)
     def __init(self,nodeMap):
         conf=SparkConf().setAppName(self.__appName)
         return SparkContext(conf=conf).textFile(nodeMap["path"])
@@ -105,5 +105,5 @@ class ProcessEngine():
         return rdd.sortBy(eval(nodeMap["operation"]))
     def __sortByKey(self,nodeMap,rdd):
         return rdd.sortByKey(eval(nodeMap["operation"]))
-    def __values(self,nodeMap,rdd):
-        return rdd.values(eval(nodeMap["operation"]))
+    def __values(self,rdd):
+        return rdd.values()
