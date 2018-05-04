@@ -25,6 +25,18 @@ class ProcessEngine():
                 self.__groupBy(head,self.__rdd)
             elif head["nodeNanName"]=="groupByKey":
                 self.__groupByKey(head,self.__rdd)
+            elif head["nodeNanName"]=="keyBy":
+                self.__keyBy(head,self.__rdd)
+            elif head["nodeNanName"]=="keys":
+                self.__keys(head,self.__rdd)
+            elif head["nodeNanName"]=="mapPartitions":
+                self.__mapPartitions(head,self.__rdd)
+            elif head["nodeNanName"]=="mapPartitionsWithIndex":
+                self.__mapPartitionsWithIndex(head,self.__rdd)
+            elif head["nodeNanName"]=="mapPartitionsWithSplit":
+                self.__mapPartitionsWithSplit(head,self.__rdd)
+            elif head["nodeNanName"]=="mapValues":
+                self.__mapValues(head,self.__rdd)
     def __init(self,nodeMap):
         conf=SparkConf().setAppName(self.__appName)
         return SparkContext(conf=conf).textFile(nodeMap["path"])
@@ -47,3 +59,15 @@ class ProcessEngine():
         return rdd.groupBy(eval(nodeMap["operation"]))
     def __groupByKey(self,nodeMap,rdd):
         return rdd.groupByKey(eval(nodeMap["operation"]))
+    def __keyBy(self,nodeMap,rdd):
+        return rdd.keyBy(eval(nodeMap["operation"]))
+    def __keys(self,nodeMap,rdd):
+        return rdd.keys(eval(nodeMap["operation"]))
+    def __mapPartitions(self,nodeMap,rdd):
+        return rdd.mapPartitions(eval(nodeMap["operation"]))
+    def __mapPartitionsWithIndex(self,nodeMap,rdd):
+        return rdd.mapPartitionsWithIndex(eval(nodeMap["operation"]))
+    def __mapPartitionsWithSplit(self,nodeMap,rdd):
+        return rdd.mapPartitionsWithSplit(eval(nodeMap["operation"]))
+    def __mapValues(self,nodeMap,rdd):
+        return rdd.mapValues(eval(nodeMap["operation"]))
