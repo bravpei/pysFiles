@@ -1,27 +1,23 @@
-import sys
-sys.path.append(r"/opt/test/component")
-from component.ProcessDriver import ProcessDriver
-from hdfs.client import Client
-import xml.etree.ElementTree as ET
-client=Client("http://172.18.130.100:50070")
-with client.read("/liupei/test/template.xml") as fs:
-    list=[]
-    key=""
-    value=""
-    #tree=ET.parse("/home/liupei/test/template.xml")
-    tree=ET.parse(fs)
-    root=tree.getroot()
-    appName=root.attrib["appName"]
-    #print(appName)
-    for childs in root:
-        map={}
-        for child in childs:
-            if child.tag=="key":
-                key=child.text
-            elif child.tag=="value":
-                value=child.text
-                map[key]=value
-        list.append(map)
-    #print(list)
-    pd = ProcessDriver(appName, list)
-    pd.start()
+# from pyspark import SparkContext,SparkConf
+# import time
+# conf=SparkConf().setAppName("test003").setMaster("local[*]")
+# sc=SparkContext(conf=conf)
+# before=time.time()
+# lines=sc.textFile("/home/liupei/test/fiction.txt")
+# count=lines.flatMap(eval('lambda s:s.split(" ")')).map(lambda x:(x,1)).reduceByKey(lambda x,y:x+y).sortBy(lambda x:x[0]).take(20)
+# after=time.time()
+# print(count)
+# print("cost:{}".format(after-before))
+
+
+from pyspark import SparkContext
+from pyspark.streaming import StreamingContext
+sc=SparkContext("local[*]","test04")
+ssc=StreamingContext(sc,2)
+lines=ssc.socketTextStream("172.18.130.100",1234)
+words=lines.flatMap(lambda x:x.split(" "))
+pairs=words.map(lambda word:(word,1))
+wordConuts=pairs.reduceByKey(lambda x,y:x+y)
+wordConuts.pprint()
+ssc.start()
+ssc.awaitTermination()

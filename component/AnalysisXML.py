@@ -3,7 +3,7 @@ from hdfs.client import Client
 import xml.etree.ElementTree as ET
 import sys
 client=Client("http://172.18.130.100:50070")
-with client.read(sys.argv[1]) as fs:
+with client.read("/DA/AnalysisXML/newProcess_111.xml") as fs:
     list=[]
     key=""
     value=""
@@ -21,6 +21,8 @@ with client.read(sys.argv[1]) as fs:
                 value=child.text
                 map[key]=value
         list.append(map)
-    #print(list)
-    pd = ProcessDriver(appName, list)
-    pd.start()
+    # print(list[0]['type'])
+    type=list[0]['type']
+    if(type=="core"):
+        pd = ProcessDriver(appName, list)
+        pd.start()
