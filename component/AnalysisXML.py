@@ -1,9 +1,9 @@
-from component.ProcessDriver import ProcessDriver
+from ProcessDriver import ProcessDriver
 from hdfs.client import Client
 import xml.etree.ElementTree as ET
 import sys
-client=Client("http://172.18.130.100:50070")
-with client.read("/DA/AnalysisXML/newProcess_111.xml") as fs:
+client=Client(sys.argv[1])
+with client.read(sys.argv[2]) as fs:
     list=[]
     key=""
     value=""
@@ -19,10 +19,9 @@ with client.read("/DA/AnalysisXML/newProcess_111.xml") as fs:
                 value=child.text
                 map[key]=value
         list.append(map)
-    type=list[0]['type']
+    type=list[0]["type"]
+    pd = ProcessDriver(appName, list)
     if(type=="core"):
-        pd = ProcessDriver(appName, list)
         pd.startCore()
     elif(type=="sql"):
-        pd = ProcessDriver(appName, list)
         pd.startSQL()

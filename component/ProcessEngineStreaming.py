@@ -11,4 +11,4 @@ class ProcessEngineStreaming():
     def __initSocket(self,nodeMap):
         sc=SparkContext("yarn",self.__appName)
         ssc=StreamingContext(sc,nodeMap["batchDuration"])
-        return ssc.socketTextStream(nodeMap["ip"],nodeMap["port"])
+        return  ssc.socketTextStream(nodeMap["ip"],nodeMap["port"])

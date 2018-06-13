@@ -17,8 +17,9 @@ class ProcessEngineSQL():
         self.__jdbcUrl=nodeMap["jdbcUrl"]
         self.__properties={"user":nodeMap["user"],"password":nodeMap["password"]}
     def __query(self,nodeMap):
-        df=self.__spark.read.jdbc(self.__jdbcUrl,nodeMap["tableName"],self.__properties)
-        df.createOrReplaceTempView(nodeMap["tableName"])
+        names=nodeMap["tableName"].split(",")
+        for name in names:
+            self.__spark.read.jdbc(self.__jdbcUrl,name,properties=self.__properties).createOrReplaceTempView(name)
         return self.__spark.sql(nodeMap["sql"])
     def __saveToTable(self,nodeMap):
-        self.__df.write.mode("append").jdbc(self.__jdbcUrl,nodeMap["tableName"],self.__properties)
+        self.__df.write.mode("append").jdbc(self.__jdbcUrl,nodeMap["tableName"],properties=self.__properties)

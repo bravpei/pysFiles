@@ -1,7 +1,5 @@
-import sys
-sys.path.append(r"/opt/test/component/ProcessEngine")
-from component.ProcessEngine import ProcessEngine
-from component.ProcessEngineSQL import ProcessEngineSQL
+from ProcessEngine import ProcessEngine
+from ProcessEngineSQL import ProcessEngineSQL
 class ProcessDriver():
     def __init__(self,appName,processConfig):
         self.__appName=appName
