@@ -7,11 +7,9 @@ with client.read("/DA/AnalysisXML/newProcess_111.xml") as fs:
     list=[]
     key=""
     value=""
-    #tree=ET.parse("/home/liupei/test/template.xml")
     tree=ET.parse(fs)
     root=tree.getroot()
     appName=root.attrib["appName"]
-    #print(appName)
     for childs in root:
         map={}
         for child in childs:
@@ -21,8 +19,10 @@ with client.read("/DA/AnalysisXML/newProcess_111.xml") as fs:
                 value=child.text
                 map[key]=value
         list.append(map)
-    # print(list[0]['type'])
     type=list[0]['type']
     if(type=="core"):
         pd = ProcessDriver(appName, list)
-        pd.start()
+        pd.startCore()
+    elif(type=="sql"):
+        pd = ProcessDriver(appName, list)
+        pd.startSQL()
