@@ -25,3 +25,5 @@ with client.read(sys.argv[2]) as fs:
         pd.startCore()
     elif(type=="sql"):
         pd.startSQL()
+    elif(type=="gpsql"):
+        pd.startgpSQL()

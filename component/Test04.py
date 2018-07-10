@@ -10,14 +10,31 @@
 # print("cost:{}".format(after-before))
 
 
-from pyspark import SparkContext
-from pyspark.streaming import StreamingContext
-sc=SparkContext("local[*]","test04")
-ssc=StreamingContext(sc,2)
-lines=ssc.socketTextStream("172.18.130.100",1234)
-words=lines.flatMap(lambda x:x.split(" "))
-pairs=words.map(lambda word:(word,1))
-wordConuts=pairs.reduceByKey(lambda x,y:x+y)
-wordConuts.pprint()
-ssc.start()
-ssc.awaitTermination()
+# from pyspark import SparkContext
+# from pyspark.streaming import StreamingContext
+# sc=SparkContext("local[*]","test04")
+# ssc=StreamingContext(sc,2)
+# lines=ssc.socketTextStream("172.18.130.100",1234)
+# words=lines.flatMap(lambda x:x.split(" "))
+# pairs=words.map(lambda word:(word,1))
+# wordConuts=pairs.reduceByKey(lambda x,y:x+y)
+# wordConuts.pprint()
+# ssc.start()
+# ssc.awaitTermination()
+
+
+
+import psycopg2
+conn=psycopg2.connect(database="postgres",user="gpadmin",password="gpadmin",host="172.18.130.101",port="5432")
+cur=conn.cursor()
+try:
+    cur.execute("select * from ac_excel_tab")
+    conn.commit()
+    rows = cur.fetchall()
+    print(rows)
+except:
+    conn.rollback
+finally:
+    cur.close()
+    conn.close()
+
