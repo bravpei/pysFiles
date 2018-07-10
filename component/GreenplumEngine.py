@@ -1,6 +1,8 @@
 import psycopg2
+from pyspark.sql import SparkSession
 class GreenplumEngine():
     def __init__(self,appName):
+        self.__spark = SparkSession.Builder().appName(appName).getOrCreate()
         self.__database=None
         self.__user=None
         self.__password=None
@@ -27,10 +29,11 @@ class GreenplumEngine():
     def __execute(self,nodeMap):
         try:
             self.__cursor.execute(nodeMap["gpsql"])
-            self.__cursor.commit()
+            self.__connect.commit()
         except:
-            self.__cursor.rollback()
+            self.__connect.rollback()
     def __close(self,nodeMap):
         if(nodeMap["isClose"]=="1"):
             self.__cursor.close()
             self.__connect.close()
+            self.__spark.stop()
